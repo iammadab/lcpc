@@ -1,0 +1,20 @@
+    Finished `release` profile [optimized] target(s) in 0.06s
+     Running unittests src/lib.rs (/Users/madab/Documents/projects/scroll/lcpc/target/release/deps/lcpc_brakedown_pc-9215c2ce9fe47535)
+
+running 1 test
+................................................................
+17: prove: 20ms verify: 28ms 5991520 2
+................................................................
+18: prove: 24ms verify: 34ms 7021624 52
+................................................................
+19: prove: 31ms verify: 49ms 8185352 245
+................................................................
+20: prove: 40ms verify: 64ms 9981840 158
+................................................................
+21: prove: 56ms verify: 90ms 12203808 116
+................................................................
+22: prove: 87ms verify: 126ms 15638552 81
+test tests::prove_verify_size_bench ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 7.72s
+

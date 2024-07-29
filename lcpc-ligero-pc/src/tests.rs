@@ -81,7 +81,7 @@ const N_ITERS: usize = 10;
 fn rough_bench() {
     use std::time::Instant;
 
-    for lgl in (17..=20).step_by(1) {
+    for lgl in (17..=22).step_by(1) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
         let enc = LigeroEncodingRho::<Goldy, TLo, THi>::new(coeffs.len());
@@ -94,7 +94,7 @@ fn rough_bench() {
             xxx ^= root.as_ref()[i];
         }
         let dur = now.elapsed().as_millis() / N_ITERS as u128;
-        println!("{}: {} {:?}", lgl, dur, xxx);
+        println!("{}: commit: {}ms {:?}", lgl, dur, xxx);
     }
 }
 
@@ -104,7 +104,7 @@ fn prove_verify_size_bench() {
     use ff::PrimeField;
     use std::time::Instant;
 
-    for lgl in (17..=20).step_by(1) {
+    for lgl in (17..=22).step_by(1) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
         let enc = LigeroEncodingRho::<Goldy, TLo, THi>::new(coeffs.len());
@@ -138,7 +138,7 @@ fn prove_verify_size_bench() {
             let encoded: Vec<u8> = bincode::serialize(&pf).unwrap();
             xxx ^= encoded[i];
         }
-        let pf_dur = now.elapsed().as_nanos() / N_ITERS as u128;
+        let pf_dur = now.elapsed().as_millis() / N_ITERS as u128;
 
         let mut tr = Transcript::new(b"test transcript");
         tr.append_message(b"polycommit", root.as_ref());
@@ -164,9 +164,10 @@ fn prove_verify_size_bench() {
                 .to_repr()
                 .as_ref()[i];
         }
-        let vf_dur = now.elapsed().as_nanos() / N_ITERS as u128;
+        let vf_dur = now.elapsed().as_millis() / N_ITERS as u128;
 
-        println!("{}: {} {} {} {}", lgl, pf_dur, vf_dur, len, xxx);
+        // println!("{}: {} {} {} {}", lgl, pf_dur, vf_dur, len, xxx);
+        println!("{}: prove: {}ms verify: {}ms {} {}", lgl, pf_dur, vf_dur, len, xxx);
     }
 }
 

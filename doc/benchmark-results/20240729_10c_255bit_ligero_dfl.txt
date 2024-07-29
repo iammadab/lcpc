@@ -1,0 +1,20 @@
+    Finished `release` profile [optimized] target(s) in 16.83s
+     Running unittests src/lib.rs (/Users/madab/Documents/projects/scroll/lcpc/target/release/deps/lcpc_ligero_pc-c1613966c0fd111b)
+
+running 1 test
+................................................................
+17: commit: 18ms 137
+................................................................
+18: commit: 29ms 232
+................................................................
+19: commit: 48ms 122
+................................................................
+20: commit: 97ms 90
+................................................................
+21: commit: 175ms 209
+................................................................
+22: commit: 423ms 163
+test tests::rough_bench ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 8.11s
+
