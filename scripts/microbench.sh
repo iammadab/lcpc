@@ -30,11 +30,11 @@ cargo clean
 )
 
 # sdig tests
-(
-	cd sdig-pc
-	cargo test --release rough_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_${CPUS}c_255bit_sdig.txt
-	cargo test --release prove_verify_size_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_${CPUS}c_255bit_sdig_pvs.txt
-
-	RAYON_NUM_THREADS=1 cargo test --release rough_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_1c_255bit_sdig.txt
-	RAYON_NUM_THREADS=1 cargo test --release prove_verify_size_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_1c_255bit_sdig_pvs.txt
-)
+#(
+#	cd sdig-pc
+#	cargo test --release rough_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_${CPUS}c_255bit_sdig.txt
+#	cargo test --release prove_verify_size_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_${CPUS}c_255bit_sdig_pvs.txt
+#
+#	RAYON_NUM_THREADS=1 cargo test --release rough_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_1c_255bit_sdig.txt
+#	RAYON_NUM_THREADS=1 cargo test --release prove_verify_size_bench -- --ignored --nocapture 2>&1 | tee ../doc/benchmark-results/${DATE}_1c_255bit_sdig_pvs.txt
+#)
