@@ -213,7 +213,7 @@ fn commit_60_poly_20_vars() {
     }
     let dur = now.elapsed().as_millis() / N_ITERS as u128;
 
-    println!("20: commit-60-poly-20-var: {}s {:?}", dur, xxx);
+    println!("20: commit-60-poly-20-var: {}ms {:?}", dur, xxx);
 }
 
 #[test]
