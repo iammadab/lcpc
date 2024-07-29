@@ -1,20 +1,20 @@
-    Finished `release` profile [optimized] target(s) in 0.05s
+    Finished `release` profile [optimized] target(s) in 0.06s
      Running unittests src/lib.rs (/Users/madab/Documents/projects/scroll/lcpc/target/release/deps/lcpc_ligero_pc-c1613966c0fd111b)
 
 running 1 test
 ................................................................
-17: prove: 3ms verify: 13ms 425968 133
+17: prove: 2ms verify: 8ms 425968 71
 ................................................................
-18: prove: 6ms verify: 31ms 564600 24
+18: prove: 4ms verify: 13ms 564600 51
 ................................................................
-19: prove: 9ms verify: 22ms 758136 153
+19: prove: 6ms verify: 12ms 758136 98
 ................................................................
-20: prove: 12ms verify: 26ms 1027840 45
+20: prove: 11ms verify: 19ms 1027840 180
 ................................................................
-21: prove: 20ms verify: 22ms 1414912 24
+21: prove: 17ms verify: 18ms 1414912 24
 ................................................................
-22: prove: 36ms verify: 38ms 1946760 108
+22: prove: 34ms verify: 27ms 1946760 83
 test tests::prove_verify_size_bench ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 3.55s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 2.77s
 

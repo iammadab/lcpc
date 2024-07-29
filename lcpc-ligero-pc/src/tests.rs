@@ -17,6 +17,7 @@ use merlin::Transcript;
 use rand::{Rng, SeedableRng};
 use rand_chacha::ChaCha20Rng;
 use std::iter::repeat_with;
+use std::time::Instant;
 use lcpc_test_fields::{ft255::*, ft63::*, random_coeffs};
 
 #[test]
@@ -96,6 +97,26 @@ fn rough_bench() {
         let dur = now.elapsed().as_millis() / N_ITERS as u128;
         println!("{}: commit: {}ms {:?}", lgl, dur, xxx);
     }
+}
+
+#[test]
+#[ignore]
+fn commit_60_poly_20_vars() {
+    let polys = (0..60).map(|_| random_coeffs(20)).collect::<Vec<_>>();
+    let enc = LigeroEncodingRho::<Goldy, TLo, THi>::new(polys[0].len());
+    let mut xxx = 0u8;
+
+    let now = Instant::now();
+    for i in 0..N_ITERS {
+        for poly_coeff in &polys {
+            let comm = LcCommit::<Blake3, _>::commit(&poly_coeff, &enc).unwrap();
+            let root = comm.get_root();
+            xxx ^= root.as_ref()[i];
+        }
+    }
+    let dur = now.elapsed().as_millis() / N_ITERS as u128;
+
+    println!("20: commit-60-poly-20-var: {}ms {:?}", dur, xxx);
 }
 
 #[test]
