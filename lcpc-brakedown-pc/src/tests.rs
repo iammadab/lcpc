@@ -20,6 +20,8 @@ use rand::{thread_rng, Rng, SeedableRng};
 use rand_chacha::ChaCha20Rng;
 use sprs::{CsMat, TriMat};
 use std::iter::repeat_with;
+use goldilocks::Goldilocks;
+use lcpc_test_fields::goldy::Goldy;
 
 #[test]
 fn col_opens() {
@@ -100,26 +102,26 @@ fn prove_verify_size_bench() {
     use ff::PrimeField;
     use std::time::Instant;
 
-    for lgl in (13..=29).step_by(2) {
+    for lgl in (17..=20).step_by(1) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
-        let enc = SdigEncodingS::<Ft255, TestCode>::new(coeffs.len(), 0);
+        let enc = SdigEncodingS::<Goldy, TestCode>::new(coeffs.len(), 0);
         let comm = LcCommit::<Blake3, _>::commit(&coeffs, &enc).unwrap();
         let root = comm.get_root();
 
         // evaluate the random polynomial we just generated at a random point x
-        let x = Ft255::random(&mut rand::thread_rng());
+        let x = Goldy::random(&mut rand::thread_rng());
 
         // compute the outer and inner tensors for powers of x
         // NOTE: we treat coeffs as a univariate polynomial, but it doesn't
         // really matter --- the only difference from a multilinear is the
         // way we compute outer_tensor and inner_tensor from the eval point
-        let inner_tensor: Vec<Ft255> = iterate(Ft255::one(), |&v| v * x)
+        let inner_tensor: Vec<Goldy> = iterate(Goldy::one(), |&v| v * x)
             .take(comm.get_n_per_row())
             .collect();
-        let outer_tensor: Vec<Ft255> = {
+        let outer_tensor: Vec<Goldy> = {
             let xr = x * inner_tensor.last().unwrap();
-            iterate(Ft255::one(), |&v| v * xr)
+            iterate(Goldy::one(), |&v| v * xr)
                 .take(comm.get_n_rows())
                 .collect()
         };
@@ -167,15 +169,17 @@ fn prove_verify_size_bench() {
 }
 
 #[test]
-#[ignore]
+// #[ignore]
 fn rough_bench() {
     use super::codespec::SdigCode3 as TestCode;
     use std::time::Instant;
 
-    for lgl in (13..=29).step_by(2) {
+    for lgl in (17..=20).step_by(1) {
+    // for lgl in (5..6).step_by(2) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
-        let enc = SdigEncodingS::<Ft255, TestCode>::new(coeffs.len(), 0);
+        // let enc = SdigEncodingS::<Ft255, TestCode>::new(coeffs.len(), 0);
+        let enc = SdigEncodingS::<Goldy, TestCode>::new(coeffs.len(), 0);
         let mut xxx = 0u8;
 
         let now = Instant::now();
@@ -184,8 +188,8 @@ fn rough_bench() {
             let root = comm.get_root();
             xxx ^= root.as_ref()[i];
         }
-        let dur = now.elapsed().as_nanos() / N_ITERS as u128;
-        println!("{}: {} {:?}", lgl, dur, xxx);
+        let dur = now.elapsed().as_millis() / N_ITERS as u128;
+        println!("{}: {}ms {:?}", lgl, dur, xxx);
     }
 }
 

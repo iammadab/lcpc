@@ -11,6 +11,7 @@ repository = "https://github.com/conroi/lcpc"
 
 [dependencies]
 ff = "0.12"
+#ff = {git = "https://github.com/iammadab/ff", branch = "main"}
 itertools = "0.10"
 lcpc-2d = { path = "../lcpc-2d", version = "0.1.1" }
 ndarray = ">=0.11.0,<0.15"
@@ -27,6 +28,7 @@ blake3 = { version = "=1.0", features = ["traits-preview"] }
 merlin = "2.0"
 paste = "1.0"
 lcpc-test-fields = { path = "../lcpc-test-fields", version = "0.1.1" }
+goldilocks = { git = "https://github.com/iammadab/Goldilocks", branch = "ff-0.12" }
 
 [features]
 bench = []

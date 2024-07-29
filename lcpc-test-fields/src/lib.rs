@@ -58,6 +58,18 @@ pub mod ft255 {
     pub struct Ft255([u64; 4]);
 }
 
+pub mod goldy {
+    use ff::PrimeField;
+    use ff_derive_num::Num;
+    use serde::{Deserialize, Serialize};
+
+    #[derive(PrimeField, Num, Deserialize, Serialize)]
+    #[PrimeFieldModulus = "18446744069414584321"]
+    #[PrimeFieldGenerator = "7"]
+    #[PrimeFieldReprEndianness = "little"]
+    pub struct Goldy([u64; 2]);
+}
+
 /// Define a bench function
 #[macro_export]
 macro_rules! def_bench {

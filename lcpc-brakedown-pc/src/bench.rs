@@ -17,6 +17,7 @@ use merlin::Transcript;
 use num_traits::Num;
 use sprs::MulAcc;
 use test::{black_box, Bencher};
+use goldilocks::Goldilocks;
 use lcpc_test_fields::{def_bench, ft127::*, ft255::*, random_coeffs};
 
 #[bench]

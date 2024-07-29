@@ -67,6 +67,7 @@ use typenum::U39 as THi;
 use typenum::U2 as THi;
 #[cfg(all(not(feature="isz"),not(feature="hlf")))]
 use typenum::U4 as THi;
+use lcpc_test_fields::goldy::Goldy;
 
 #[test]
 fn rate() {
@@ -80,10 +81,10 @@ const N_ITERS: usize = 10;
 fn rough_bench() {
     use std::time::Instant;
 
-    for lgl in (13..=29).step_by(2) {
+    for lgl in (17..=20).step_by(1) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
-        let enc = LigeroEncodingRho::<Ft255, TLo, THi>::new(coeffs.len());
+        let enc = LigeroEncodingRho::<Goldy, TLo, THi>::new(coeffs.len());
         let mut xxx = 0u8;
 
         let now = Instant::now();
@@ -92,7 +93,7 @@ fn rough_bench() {
             let root = comm.get_root();
             xxx ^= root.as_ref()[i];
         }
-        let dur = now.elapsed().as_nanos() / N_ITERS as u128;
+        let dur = now.elapsed().as_millis() / N_ITERS as u128;
         println!("{}: {} {:?}", lgl, dur, xxx);
     }
 }
@@ -103,26 +104,26 @@ fn prove_verify_size_bench() {
     use ff::PrimeField;
     use std::time::Instant;
 
-    for lgl in (13..=29).step_by(2) {
+    for lgl in (17..=20).step_by(1) {
         // commit to random poly of specified size
         let coeffs = random_coeffs(lgl);
-        let enc = LigeroEncodingRho::<Ft255, TLo, THi>::new(coeffs.len());
+        let enc = LigeroEncodingRho::<Goldy, TLo, THi>::new(coeffs.len());
         let comm = LcCommit::<Blake3, _>::commit(&coeffs, &enc).unwrap();
         let root = comm.get_root();
 
         // evaluate the random polynomial we just generated at a random point x
-        let x = Ft255::random(&mut rand::thread_rng());
+        let x =Goldy::random(&mut rand::thread_rng());
 
         // compute the outer and inner tensors for powers of x
         // NOTE: we treat coeffs as a univariate polynomial, but it doesn't
         // really matter --- the only difference from a multilinear is the
         // way we compute outer_tensor and inner_tensor from the eval point
-        let inner_tensor: Vec<Ft255> = iterate(Ft255::one(), |&v| v * x)
+        let inner_tensor: Vec<Goldy> = iterate(Goldy::one(), |&v| v * x)
             .take(comm.get_n_per_row())
             .collect();
-        let outer_tensor: Vec<Ft255> = {
+        let outer_tensor: Vec<Goldy> = {
             let xr = x * inner_tensor.last().unwrap();
-            iterate(Ft255::one(), |&v| v * xr)
+            iterate(Goldy::one(), |&v| v * xr)
                 .take(comm.get_n_rows())
                 .collect()
         };

@@ -947,8 +947,8 @@ where
     Ok(inner_tensor
         .par_iter()
         .zip(&proof.p_eval[..])
-        .fold(FldT::<E>::zero, |a, (t, e)| a + *t * e)
-        .reduce(FldT::<E>::zero, |a, v| a + v))
+        .fold(|| FldT::<E>::zero(), |a, (t, e)| a + *t * e)
+        .reduce(|| FldT::<E>::zero(), |a, v| a + v))
 }
 
 // Check a column opening
